@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +18,17 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@SpringBootApplication
 public class Application {
   private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
   public static void main(String[] args) throws Exception {
     List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
@@ -40,14 +47,16 @@ public class Application {
       FirebaseApp.initializeApp(options);
     }
 
-    ApplicationContext context = SpringApplication.run(Application.class, args);
-    logger.info("Let's inspect the beans provided by Spring Bot");
+    SpringApplication.run(Application.class, args);
 
-    String[] beanNames = context.getBeanDefinitionNames();
-    Arrays.sort(beanNames);
-
-    for(String beanName: beanNames) {
-      logger.info(beanName);
-    }
+//    ApplicationContext context = SpringApplication.run(Application.class, args);
+//    logger.info("Let's inspect the beans provided by Spring Bot");
+//
+//    String[] beanNames = context.getBeanDefinitionNames();
+//    Arrays.sort(beanNames);
+//
+//    for(String beanName: beanNames) {
+//      logger.info(beanName);
+//    }
   }
 }

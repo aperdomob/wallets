@@ -15,12 +15,15 @@ import java.time.ZonedDateTime;
 @RestController
 @RequestMapping("wallets")
 public class WalletController {
-  @Autowired
-  private final WalletService walletService;
+//  @Autowired
+//  private final WalletService walletService;
 
-  public WalletController(final WalletService walletService) {
-    this.walletService = walletService;
+  public WalletController() {
   }
+
+//  public WalletController(final WalletService walletService) {
+//    this.walletService = walletService;
+//  }
 
   @RequestMapping(method = RequestMethod.GET)
   public WalletResponseDto getAll() {
@@ -34,12 +37,12 @@ public class WalletController {
 
     return dto;
   }
-
-  @RequestMapping(method = RequestMethod.POST)
-  public WalletResponseDto save(@RequestBody WalletBodyDto walletBody) {
-    Wallet wallet = WalletDtoTransformer.toModel(walletBody);
-    Wallet walletResult = this.walletService.create(wallet);
-
-    return WalletDtoTransformer.toResponse(walletResult);
-  }
+//
+//  @RequestMapping(method = RequestMethod.POST)
+//  public WalletResponseDto save(@RequestBody WalletBodyDto walletBody) {
+//    Wallet wallet = WalletDtoTransformer.toModel(walletBody);
+//    Wallet walletResult = this.walletService.create(wallet);
+//
+//    return WalletDtoTransformer.toResponse(walletResult);
+//  }
 }
