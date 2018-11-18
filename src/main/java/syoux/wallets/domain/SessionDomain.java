@@ -1,5 +1,6 @@
 package syoux.wallets.domain;
 
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Component;
 import syoux.wallets.model.UserSession;
 import syoux.wallets.repository.AllowedUserRepository;
@@ -20,9 +21,12 @@ public class SessionDomain {
   }
 
   public void init(UserSession session) {
+    if (this.allowedUserRepository.get(session.getMail()) == null) {
+      throw new AuthorizationServiceException("the user is not authorized");
+    }
+
     UserSessionDao dao = UserSessionMapper.toDao(session);
 
     this.userSessionRepository.save(dao);
-
   }
 }

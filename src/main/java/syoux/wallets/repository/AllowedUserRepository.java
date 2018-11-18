@@ -1,4 +1,7 @@
 package syoux.wallets.repository;
 
-public interface AllowedUserRepository {
+import com.google.firebase.database.ValueEventListener;
+
+public interface AllowedUserRepository extends ValueEventListener {
+  String get(String mail);
 }
