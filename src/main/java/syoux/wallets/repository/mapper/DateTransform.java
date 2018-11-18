@@ -1,4 +1,4 @@
-package syoux.wallets.repository.transform;
+package syoux.wallets.repository.mapper;
 
 import java.time.Instant;
 import java.time.ZoneId;

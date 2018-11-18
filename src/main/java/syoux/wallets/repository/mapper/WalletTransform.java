@@ -1,4 +1,4 @@
-package syoux.wallets.repository.transform;
+package syoux.wallets.repository.mapper;
 
 import syoux.wallets.model.Wallet;
 import syoux.wallets.repository.dao.WalletDao;

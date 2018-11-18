@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import syoux.wallets.model.Wallet;
 import syoux.wallets.repository.dao.WalletDao;
-import syoux.wallets.repository.transform.WalletTransform;
+import syoux.wallets.repository.mapper.WalletTransform;
 
 import java.util.Collection;
 import java.util.HashMap;
