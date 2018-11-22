@@ -11,4 +11,12 @@ public class UserSessionMapper {
 
     return dao;
   }
+
+  public static UserSession toModel(UserSessionDao dao) {
+    UserSession model = new UserSession();
+    model.setMail(dao.getMail());
+    model.setSessionId(dao.getSessionId());
+
+    return model;
+  }
 }

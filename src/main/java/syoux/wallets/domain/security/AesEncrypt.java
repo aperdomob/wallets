@@ -1,21 +1,19 @@
 package syoux.wallets.domain.security;
 
+import org.springframework.stereotype.Component;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Base64;
 
+@Component
 public class AesEncrypt {
   private final String ALGORITHM = "AES/CBC/PKCS5PADDING";
-  private final String secretKey;
-  private final byte[] keyValue;
 
 
-  public AesEncrypt() {
-    this.secretKey = "TheBestSecretKey";
-    this.keyValue =  this.secretKey.getBytes();
-  }
+  public AesEncrypt() {}
 
   /**
    * Encrypt a string with AES algorithm.

@@ -3,6 +3,7 @@ package syoux.wallets.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import syoux.wallets.component.SessionComponent;
+import syoux.wallets.model.UserWallet;
 import syoux.wallets.model.UserSession;
 
 @Service

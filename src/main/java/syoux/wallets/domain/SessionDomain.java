@@ -25,8 +25,26 @@ public class SessionDomain {
       throw new AuthorizationServiceException("the user is not authorized");
     }
 
+    if(!this.isValidSessionId(session)) {
+      throw new AuthorizationServiceException("the sessionId is not valid");
+    }
+
     UserSessionDao dao = UserSessionMapper.toDao(session);
 
     this.userSessionRepository.save(dao);
+  }
+
+  public UserSession getSession(String username) {
+    return UserSessionMapper.toModel(this.userSessionRepository.get(username));
+  }
+
+  private boolean isValidSessionId(UserSession session) {
+    UserSessionDao dao = this.userSessionRepository.get(session.getMail());
+
+    if (dao != null) {
+      return session.getSessionId() > dao.getSessionId();
+    }
+
+    return  true;
   }
 }

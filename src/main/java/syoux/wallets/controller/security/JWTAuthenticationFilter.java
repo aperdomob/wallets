@@ -2,13 +2,16 @@ package syoux.wallets.controller.security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import syoux.wallets.model.ApplicationUser;
+import syoux.wallets.model.UserWallet;
+import syoux.wallets.service.SessionService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -35,13 +38,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   public Authentication attemptAuthentication(HttpServletRequest req,
                                               HttpServletResponse res) throws AuthenticationException {
     try {
-      ApplicationUser creds = new ObjectMapper()
-          .readValue(req.getInputStream(), ApplicationUser.class);
+      UserWallet user = new ObjectMapper().readValue(req.getInputStream(), UserWallet.class);
+
 
       return authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(
-              creds.getUsername(),
-              creds.getPassword(),
+              user.getUsername(),
+              user.getPassword(),
               new ArrayList<>())
       );
     } catch (IOException e) {
@@ -59,6 +62,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         .withSubject(((User) auth.getPrincipal()).getUsername())
         .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
         .sign(HMAC512(SECRET.getBytes()));
-    res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+
+
+
+    res.setContentType("application/json");
+    res.setCharacterEncoding("UTF-8");
+    res.getWriter().write(new JSONObject().put("token", TOKEN_PREFIX + token).toString());
+    res.getWriter().flush();
+    res.getWriter().close();
   }
 }
